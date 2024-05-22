@@ -73,28 +73,19 @@ if st.button("Generate Report"):
       Please provide a brief two line observation based on the summary of this data.
       """
 
-      # client= openai.OpenAI(api_key=os.getenv("OPEN_API_KEY"))
+      client= openai.OpenAI(api_key=os.getenv("OPEN_API_KEY"))
 
-      # completion = client.chat.completions.create(
-      #   model="gpt-4o",
-      #   messages=[
-      #     {"role": "system", "content": "You are a data analyst with ability to generate quality observation from the given data"},
-      #     {"role": "user", "content": prompt}
-      #   ]
-      # )
+      completion = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+          {"role": "system", "content": "You are a data analyst with ability to generate quality observation from the given data"},
+          {"role": "user", "content": prompt}
+        ]
+      )
 
 
-      # # Print the observation
-      # observation=completion.choices[0].message.content
-
-      observation = """
-      In November 2023, the company achieved 1997169.2625 in total sales, which is 999661.9875 below the target of 2996831.25. This indicates that the company fell short of its sales target by approximately 33.37%.
-                              Metric         Value
-      0                  Total Sales  1.997169e+06
-      1         Company Total Target  2.996831e+06
-      2  Difference (Sales - Target) -9.996620e+05
-      3           Sales/Target Ratio  6.664270e-01
-      """
+      # Print the observation
+      observation=completion.choices[0].message.content
 
       st.write(observation)
 
