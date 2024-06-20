@@ -78,10 +78,10 @@ if st.button("Generate Report"):
         # Display the first few rows of each dataset to understand their structure
      
 
-        Current_year_Selection = 2024
-        Current_month_Selection = 2
+        Current_year_Selection = st.selectbox("Select Current Year", [2023, 2024])
+        Current_month_Selection = st.selectbox("Select Current Month", range(1, 13))
         Previous_year_Selection = Current_year_Selection-1
-        Previous_month_selection =2
+        Previous_month_selection = Current_month_Selection
         YTD_Month=10
 
 
