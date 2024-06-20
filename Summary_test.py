@@ -62,7 +62,12 @@ st.title("Data Report Generator 📈")
 # Importing the datasets
 sales_Data_name = st.file_uploader("Upload your Data File in XLSX format", type=['xlsx'])
 target_Data_name = st.file_uploader("Upload your Target file in XLSX format", type=['xlsx'])
-  
+Current_year_Selection = st.selectbox("Select Current Year",[2023, 2024])
+Current_month_Selection = st.selectbox("Select Current Month",range(1,13))
+Previous_year_Selection = Current_year_Selection-1
+Previous_month_selection = Current_month_Selection
+YTD_Month=10
+
 if st.button("Generate Report"):
     with st.spinner("Loading .. 🔃"):
     #   #load the presentation template
@@ -78,11 +83,8 @@ if st.button("Generate Report"):
         # Display the first few rows of each dataset to understand their structure
      
 
-        Current_year_Selection = st.selectbox("Select Current Year",[2023, 2024])
-        Current_month_Selection = st.selectbox("Select Current Month",range(1,13))
-        Previous_year_Selection = Current_year_Selection-1
-        Previous_month_selection = Current_month_Selection
-        YTD_Month=10
+
+
 
 
         # Convert the 'Date' columns to datetime
