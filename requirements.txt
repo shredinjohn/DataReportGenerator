@@ -3,3 +3,6 @@ pandas
 openai
 python-dotenv
 openpyxl
+matplotlib
+python-pptx
+python-dotenv
