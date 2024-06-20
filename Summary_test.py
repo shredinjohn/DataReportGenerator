@@ -12,7 +12,7 @@ from pptx.util import Inches
 from pptx.dml.color import RGBColor
 from pptx.chart.data import ChartData
 from pptx.util import Inches
-
+import os
 import streamlit as st
 import pandas as pd
 import openai
