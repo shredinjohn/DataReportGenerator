@@ -214,8 +214,7 @@ if st.button("Generate Report"):
         """
 
 
-        api_key = os.getenv("OPENAI_API_KEY")
-        client = openai.OpenAI(api_key=api_key)
+        client= openai.OpenAI(api_key=os.getenv("OPEN_API_KEY"))
 
 
         completion = client.chat.completions.create(
