@@ -99,32 +99,32 @@ if st.button("Generate Report"):
         previous_sales= sales_data[(sales_data['Date'].dt.year == Previous_year_Selection) & (sales_data['Date'].dt.month == Previous_month_selection)]
 
 
-        adjusted_year = Current_year_Selection if Current_month_Selection >= 10 else Current_year_Selection - 1
-
+       # Determine the YTD start year
+        YTD_start_year1 = Current_year_Selection if Current_month_Selection >= 10 else Current_year_Selection - 1
+        
         # Construct the mask for filtering the data
         mask = (
-            ((sales_data['Date'].dt.year == adjusted_year) & (sales_data['Date'].dt.month >= 10)) |  # Includes from October of the starting YTD year
-            ((sales_data['Date'].dt.year == Current_year_Selection) & (sales_data['Date'].dt.month <= Current_month_Selection))  # Includes up to the selected month of the current year
-        )
-        
-        # Additional condition to ensure we don't include data past the selected month in the current year
-        mask = mask & ((sales_data['Date'].dt.year < Current_year_Selection) | ((sales_data['Date'].dt.year == Current_year_Selection) & (sales_data['Date'].dt.month <= Current_month_Selection)))
+            ((sales_data['Date'].dt.year == YTD_start_year1) & (sales_data['Date'].dt.month >= 10)) &
+            ((sales_data['Date'].dt.year == Current_year_Selection) & (sales_data['Date'].dt.month <= Current_month_Selection))
+        ) if Current_month_Selection >= 10 else (
+            ((sales_data['Date'].dt.year == YTD_start_year1) & (sales_data['Date'].dt.month >= 10)) |
+            ((sales_data['Date'].dt.year == Current_year_Selection) & (sales_data['Date'].dt.month <= Current_month_Selection))
+        ) 
         
         # Apply the mask to filter the DataFrame
         Current_year_to_date_sales = sales_data[mask]
-        
-       # Adjust the year based on whether the previous month selection is less than the starting YTD month (October)
+        # Adjust the year based on whether the previous month selection is less than the starting YTD month (October)
+
         YTD_start_year = Previous_year_Selection if Previous_month_selection >= 10 else Previous_year_Selection - 1
         
         # Construct the mask for filtering the data
         mask = (
-            ((sales_data['Date'].dt.year == YTD_start_year) & (sales_data['Date'].dt.month >= 10)) |  # Includes from October of the starting YTD year
-            ((sales_data['Date'].dt.year == Previous_year_Selection) & (sales_data['Date'].dt.month <= Previous_month_selection))  # Includes up to the selected month of the previous year
+            ((sales_data['Date'].dt.year == YTD_start_year) & (sales_data['Date'].dt.month >= 10)) &
+            ((sales_data['Date'].dt.year == Previous_year_Selection) & (sales_data['Date'].dt.month <= Previous_month_selection))
+        ) if Previous_month_selection >= 10 else (
+            ((sales_data['Date'].dt.year == YTD_start_year) & (sales_data['Date'].dt.month >= 10)) |
+            ((sales_data['Date'].dt.year == Previous_year_Selection) & (sales_data['Date'].dt.month <= Previous_month_selection))
         )
-        
-        # Additional condition to ensure we don't include data past the selected month in the previous year
-        mask = mask & ((sales_data['Date'].dt.year < Previous_year_Selection) | ((sales_data['Date'].dt.year == Previous_year_Selection) & (sales_data['Date'].dt.month <= Previous_month_selection)))
-        
         # Apply the mask to filter the DataFrame
         Previous_year_to_date_sales = sales_data[mask]
 
